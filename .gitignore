@@ -42,3 +42,7 @@ package-lock.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/app/generated/prisma
+
+/app/generated/prisma
