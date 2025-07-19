@@ -1,10 +1,11 @@
-import { Button, TextArea, TextField } from "@radix-ui/themes"
+import { Button, TextField } from "@radix-ui/themes"
+import MarkdownEditor from "@/components/MarkdownEditor"
 
 const NewIssuePage = () => {
   return (
     <div className="flex flex-col gap-4 max-w-xl">
       <TextField.Root placeholder="Issue title" />
-      <TextArea placeholder="Issue description" />
+      <MarkdownEditor />
       <Button>Submit issue</Button>
     </div>
   )
