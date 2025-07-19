@@ -18,12 +18,23 @@ model Issue {
   title       String
   description String
   status      Status   @default(OPEN)
+  severity    Severity @default(NORMAL)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  // DONE: Add severity to issue as well
 }
 
 enum Status {
   OPEN
   IN_PROGRESS
   CLOSED
+}
+
+enum Severity {
+  MINOR
+  NORMAL
+  MAJOR
+  CRITICAL
+  SHOW_STOPPER
 }
