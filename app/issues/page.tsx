@@ -1,5 +1,5 @@
 import Link from "next/link"
-import getIssues from "@/actions/getIssues"
+import getIssues from "@/actions/issues"
 import { Button } from "@radix-ui/themes"
 import { TableComponent } from "@/components/Table"
 
