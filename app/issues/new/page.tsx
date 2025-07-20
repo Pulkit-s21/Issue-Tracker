@@ -1,14 +1,14 @@
 "use client"
 
 import MarkdownEditor from "@/components/MarkdownEditor"
-import axios from "axios"
 import { Button, Callout, TextField } from "@radix-ui/themes"
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { createIssueSchema } from "@/app/validationSchemas"
+import { formSubmit } from "@/actions/formSubmit"
 import ErrorMessage from "@/components/ErrorMessage"
 import Spinner from "@/components/Spinner"
 
@@ -27,19 +27,7 @@ const NewIssuePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const router = useRouter()
-  const onSubmit: SubmitHandler<IssueForm> = async (data) => {
-    try {
-      // TODO: Add a toast to show issue submitted and then redirect
-      setIsSubmitting(true)
-      await axios.post("/api/issues", data)
-      router.push("/issues")
-    } catch (err) {
-      // TODO: Add a toast to show err occured
-      setError("An unexpected error occured.")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+  const onSubmit = formSubmit(setIsSubmitting, setError, router) // moved submit code to separate action file
 
   return (
     <div className="max-w-xl">
