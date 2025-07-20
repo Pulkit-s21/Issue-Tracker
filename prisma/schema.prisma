@@ -21,7 +21,6 @@ model Issue {
   severity    Severity @default(NORMAL)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
   // DONE: Add severity to issue as well
 }
 
