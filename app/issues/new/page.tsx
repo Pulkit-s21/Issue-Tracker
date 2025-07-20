@@ -9,6 +9,7 @@ import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { createIssueSchema } from "@/app/validationSchemas"
+import ErrorMessage from "@/components/ErrorMessage"
 
 type IssueForm = z.infer<typeof createIssueSchema> // only need to change form validations in 1 place only now
 
@@ -48,11 +49,7 @@ const NewIssuePage = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <TextField.Root placeholder="Issue title" {...register("title")} />
-        {errors.title && (
-          <Text color="red" as="p">
-            {errors.title.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           name="description"
           control={control}
@@ -60,11 +57,7 @@ const NewIssuePage = () => {
             <MarkdownEditor placeholder="Description" {...field} />
           )}
         />
-        {errors.description && (
-          <Text color="red" as="p">
-            {errors.description.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button>Submit issue</Button>
       </form>
     </div>
