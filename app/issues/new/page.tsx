@@ -2,7 +2,7 @@
 
 import MarkdownEditor from "@/components/MarkdownEditor"
 import axios from "axios"
-import { Button, Callout, Text, TextField } from "@radix-ui/themes"
+import { Button, Callout, TextField } from "@radix-ui/themes"
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { createIssueSchema } from "@/app/validationSchemas"
 import ErrorMessage from "@/components/ErrorMessage"
+import Spinner from "@/components/Spinner"
 
 type IssueForm = z.infer<typeof createIssueSchema> // only need to change form validations in 1 place only now
 
@@ -23,16 +24,20 @@ const NewIssuePage = () => {
     resolver: zodResolver(createIssueSchema),
   })
   const [error, setError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const router = useRouter()
   const onSubmit: SubmitHandler<IssueForm> = async (data) => {
     try {
       // TODO: Add a toast to show issue submitted and then redirect
+      setIsSubmitting(true)
       await axios.post("/api/issues", data)
       router.push("/issues")
     } catch (err) {
       // TODO: Add a toast to show err occured
       setError("An unexpected error occured.")
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -58,7 +63,9 @@ const NewIssuePage = () => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button>Submit issue</Button>
+        <Button disabled={isSubmitting}>
+          {isSubmitting ? <Spinner /> : <p> Submit issue</p>}{" "}
+        </Button>
       </form>
     </div>
   )
