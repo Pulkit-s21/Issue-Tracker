@@ -1,5 +1,6 @@
 import { Table } from "@radix-ui/themes"
 import { FC } from "react"
+import IssueBadge from "./IssueBadge"
 
 type Issue = {
   id: number
@@ -52,10 +53,12 @@ export const TableBody: FC<{ issues: Issue[] }> = ({ issues }) => {
                 </p>
                 {issue.title}
               </div>
-              <p className="block sm:hidden">{issue.status}</p>
+              <p className="block sm:hidden">
+                <IssueBadge status={issue.status} />
+              </p>
             </Table.Cell>
             <Table.Cell className="hidden sm:table-cell">
-              {issue.status}
+              <IssueBadge status={issue.status} />
             </Table.Cell>
             <Table.Cell className="hidden sm:table-cell">
               {issue.createdAt.toDateString()}
