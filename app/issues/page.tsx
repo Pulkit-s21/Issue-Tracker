@@ -1,19 +1,15 @@
-import Link from "next/link"
-import getIssues from "@/actions/issues"
-import { Button } from "@radix-ui/themes"
 import { TableComponent } from "@/components/Table"
+import getIssues from "@/actions/issues"
+import delay from "delay"
+import IssueActions from "./IssueActions"
 
 const IssuesPage = async () => {
   const issues = await getIssues()
+  await delay(2000)
 
   return (
     <div>
-      <div className="mb-5">
-        <Button>
-          <Link href={"/issues/new"}>New Issue</Link>
-        </Button>
-      </div>
-
+      <IssueActions />
       <TableComponent issues={issues} />
     </div>
   )
